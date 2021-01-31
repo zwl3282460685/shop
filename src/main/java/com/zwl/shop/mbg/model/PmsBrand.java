@@ -4,9 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class PmsBrand implements Serializable {
-    @ApiModelProperty(value = "品牌id")
     private Long id;
-    @ApiModelProperty(value = "品牌名称")
     private String name;
 
     /**

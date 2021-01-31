@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +29,14 @@ public class PmsBrandController {
 
     @ApiOperation("获取所有品牌列表")
     @GetMapping("/listAll")
+    @PreAuthorize("hasAnyAuthority('pms:brand:read')")
     public CommonResult<List<PmsBrand>> getBrandList() {
         return CommonResult.success(pmsBrandService.listAllBrand());
     }
 
     @ApiOperation("添加品牌")
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('pms:brand:create')")
     public CommonResult addBrand(@RequestBody PmsBrand pmsBrand){
         CommonResult commonResult;
         if(pmsBrandService.createBrand(pmsBrand) != 0){
@@ -48,6 +51,7 @@ public class PmsBrandController {
 
     @ApiOperation("更新指定id品牌的信息")
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('pms:brand:update')")
     public CommonResult updateBrand(@PathVariable("id") Long id, @RequestBody PmsBrand pmsBrand){
         CommonResult commonResult;
         if(pmsBrandService.updateBrand(id, pmsBrand) != 0){
@@ -62,6 +66,7 @@ public class PmsBrandController {
 
     @ApiOperation("删除指定id的品牌")
     @DeleteMapping("/delBrand/{id}")
+    @PreAuthorize("hasAuthority('pms:brand:delete')")
     public CommonResult deleteBrand(@PathVariable("id") Long id){
         CommonResult commonResult;
         if(pmsBrandService.deleteBand(id) != 0){
@@ -77,6 +82,7 @@ public class PmsBrandController {
 
     @ApiOperation("分页查询品牌列表")
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('pms:brand:read')")
     public CommonResult<CommonPage<PmsBrand>> pageBrand(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
         List<PmsBrand> brandList = pmsBrandService.listBrand(pageNum, pageSize);
@@ -85,6 +91,7 @@ public class PmsBrandController {
 
     @ApiOperation("获取指定id的品牌详情")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('pms:brand:read')")
     public CommonResult<PmsBrand> brand(@PathVariable("id") Long id){
         return CommonResult.success(pmsBrandService.getBrandById(id));
     }

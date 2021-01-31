@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @date : 2021/1/21 15:45
  */
 @Configuration
-@MapperScan(basePackages = "com.zwl.shop.mbg.mapper")
+@MapperScan({"com.zwl.shop.mbg.mapper", "com.zwl.shop.dao"})
 public class MybatisConfig {
 
 }
